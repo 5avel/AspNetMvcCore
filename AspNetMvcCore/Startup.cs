@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DataService;
+using AspNetMvcCore.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -24,8 +24,8 @@ namespace AspNetMvcCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IWebClient, WebClient>();
-            services.AddSingleton<IQueryStore, QueryStore>();
+            services.AddSingleton<IDataSecice, DataSecice>();
+            services.AddSingleton<IQueryService, QueryService>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {

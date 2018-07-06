@@ -1,10 +1,13 @@
-﻿using DataService.Model;
+﻿
+using AspNetMvcCore.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
-namespace DataService
+namespace AspNetMvcCore.Services
 {
-    public interface IQueryStore
+    public interface IQueryService
     {
         IEnumerable<(Post, int)> GetPostCommentsCountByUserId(int userId);
         IEnumerable<Comment> GetPostCommentsBodyLessThan50ByUserId(int userId);
@@ -14,23 +17,26 @@ namespace DataService
         (Post, Comment, Comment, int) GetPostById(int postId);
 
     }
-    public class QueryStore : IQueryStore
+
+    public class QueryService : IQueryService
     {
-        private IWebClient _webClient;
+        private IDataSecice _dataSecice;
+
         private IEnumerable<User> _collection;
-        public QueryStore(IWebClient webClient)
+
+        public QueryService(IDataSecice dataSecice)
         {
-            _webClient = webClient;
+            _dataSecice = dataSecice;
             CreateAssociateEntities();
         }
 
         private void CreateAssociateEntities()
         {
-            var users = _webClient.GetUsersList();
-            var posts = _webClient.GetPostsList();
-            var comments = _webClient.GetCommentsList();
-            var todos = _webClient.GetTodosList();
-            var address = _webClient.GetAddressList();
+            var users = _dataSecice.GetUsersList();
+            var posts = _dataSecice.GetPostsList();
+            var comments = _dataSecice.GetCommentsList();
+            var todos = _dataSecice.GetTodosList();
+            var address = _dataSecice.GetAddressList();
 
             var postsComments = posts.GroupJoin(comments, p => p.Id, c => c.PostId,
                (p, c) => new Post()
@@ -113,7 +119,7 @@ namespace DataService
         public IEnumerable<User> GetUsetsSortByNameAndTodosSortByNameDesc()
         {
             return _collection.OrderBy(u => u.Name)
-                .Select(u => 
+                .Select(u =>
                 {
                     u.Todos = u.Todos.OrderByDescending(t => t.name.Length);
                     return u;
@@ -139,8 +145,8 @@ namespace DataService
         public (Post, Comment, Comment, int) GetPostById(int postId)
         {
             var res2 = _collection.SelectMany(u => u.Posts.Where(p => p.Id == postId)
-            .Select(x => 
-            ( 
+            .Select(x =>
+            (
                 x,
                 x.Comments.OrderBy(c => c.Body.Length).FirstOrDefault(),
                 x.Comments.OrderBy(c => c.Likes).FirstOrDefault(),
@@ -148,6 +154,5 @@ namespace DataService
             ))).FirstOrDefault();
             return res2;
         }
-
     }
 }

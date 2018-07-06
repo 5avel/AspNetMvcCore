@@ -1,0 +1,11 @@
+﻿@model List<(AspNetMvcCore.Models.Post, int)>
+
+@{
+    ViewData["Title"] = "Query 1";
+}
+<h2>@ViewData["Title"]</h2>
+
+@foreach (var i in Model)
+{
+    <p>@i.Item1.Id</p> <p>@i.Item2</p>
+}

@@ -5,20 +5,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AspNetMvcCore.Models;
-using DataService;
+
 
 namespace AspNetMvcCore.Controllers
 {
     public class HomeController : Controller
     {
-        public HomeController(IQueryStore queryStore)
+        public HomeController()
         {
-            var q1 = queryStore.GetPostCommentsCountByUserId(5);
-            var q2 = queryStore.GetPostCommentsBodyLessThan50ByUserId(5);
-            var q3 = queryStore.GetTodoIdNameByUserId(5);
-            var q4 = queryStore.GetUsetsSortByNameAndTodosSortByNameDesc();
-            var q5 = queryStore.GetUserById(5);
-            var q6 = queryStore.GetPostById(5);
+          
         }
         public IActionResult Index()
         {
