@@ -83,7 +83,7 @@ namespace DataService
                    where u.Id == userId
                    from p in u.Posts
                    from c in p.Comments
-                   where c.Body.Length > 50
+                   where c.Body.Length < 50
                    select c;
         }
 
@@ -98,12 +98,12 @@ namespace DataService
 
         public IEnumerable<User> GetUsetsSortByNameAndTodosSortByNameDesc()
         {
-            return from u in _collection
-                   orderby u.Name
-                   from t in u.Todos
-                   where t.IsComplete
-                   orderby t.name.Length descending
-                   select u;
+            return _collection.OrderBy(u => u.Name)
+                .Select(u => 
+                {
+                    u.Todos = u.Todos.OrderByDescending(t => t.name.Length);
+                    return u;
+                });
         }
 
         public (User, Post, int, int, Post, Post) GetUserById(int userId)
@@ -115,8 +115,8 @@ namespace DataService
                           x.Posts.OrderBy(p => p.CreatedAt).Last(),
                           x.Posts.OrderBy(p => p.CreatedAt).Last().Comments.Count(),
                           x.Todos.Count(t => t.IsComplete == false),
-                          x.Posts.GroupBy(p => p.Comments.Count(c => c.Body.Length > 80)).First().First(),
-                          x.Posts.GroupBy(p => p.Likes).First().First()
+                          x.Posts.OrderBy(p => p.Comments.Count(c => c.Body.Length > 80)).Last(),
+                          x.Posts.OrderBy(p => p.Likes).Last()
                       )).First();
         }
 
