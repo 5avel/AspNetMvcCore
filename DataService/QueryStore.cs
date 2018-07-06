@@ -4,7 +4,17 @@ using System.Linq;
 
 namespace DataService
 {
-    public class QueryStore
+    public interface IQueryStore
+    {
+        IEnumerable<(Post, int)> GetPostCommentsCountByUserId(int userId);
+        IEnumerable<Comment> GetPostCommentsBodyLessThan50ByUserId(int userId);
+        IEnumerable<(int, string)> GetTodoIdNameByUserId(int userId);
+        IEnumerable<User> GetUsetsSortByNameAndTodosSortByNameDesc();
+        (User, Post, int, int, Post, Post) GetUserById(int userId);
+        (Post, Comment, Comment, int) GetPostById(int postId);
+
+    }
+    public class QueryStore : IQueryStore
     {
         private IWebClient _webClient;
         private IEnumerable<User> _collection;
@@ -122,16 +132,15 @@ namespace DataService
 
         public (Post, Comment, Comment, int) GetPostById(int postId)
         {
-            return (from u in _collection
-                    from p in u.Posts
-                    where p.Id == postId
-                    select
-                    (
-                         p,
-                         p.Comments.OrderBy(c => c.Body.Length).First(),
-                         p.Comments.OrderBy(c => c.Likes).First(),
-                         p.Comments.Count(c => c.Likes == 0 || c.Body.Length < 80)
-                     )).First();
+            var res2 = _collection.SelectMany(u => u.Posts.Where(p => p.Id == postId)
+            .Select(x => 
+            ( 
+                x,
+                x.Comments.OrderBy(c => c.Body.Length).FirstOrDefault(),
+                x.Comments.OrderBy(c => c.Likes).FirstOrDefault(),
+                x.Comments.Count(c => c.Likes == 0 || c.Body.Length < 80)
+            ))).FirstOrDefault();
+            return res2;
         }
 
     }

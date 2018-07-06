@@ -19,7 +19,7 @@ namespace DataService
     {
         private string baseAddress = "https://5b128555d50a5c0014ef1204.mockapi.io/";
 
-        private async Task<string> GetJsonDataAsync(string endpoint)
+        private string GetJsonData(string endpoint)
         {
             Console.WriteLine($"Waiting for a response from the server {endpoint}");
             using (var client = new HttpClient())
@@ -30,7 +30,7 @@ namespace DataService
                     {
                         if (response.IsSuccessStatusCode)
                         {
-                            var jsonString = await response.Content.ReadAsStringAsync();
+                            var jsonString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
                             return jsonString;
                         }
@@ -51,35 +51,35 @@ namespace DataService
 
         public List<User> GetUsersList()
         {
-            string usersJson = new WebClient().GetJsonDataAsync("users").GetAwaiter().GetResult();
+            string usersJson = new WebClient().GetJsonData("users");
 
             return JsonConvert.DeserializeObject<List<User>>(usersJson);
         }
 
         public List<Post> GetPostsList()
         {
-            string postsJson = new WebClient().GetJsonDataAsync("posts").GetAwaiter().GetResult();
+            string postsJson = new WebClient().GetJsonData("posts");
 
             return JsonConvert.DeserializeObject<List<Post>>(postsJson);
         }
 
         public List<Comment> GetCommentsList()
         {
-            string commentsJson = new WebClient().GetJsonDataAsync("comments").GetAwaiter().GetResult();
+            string commentsJson = new WebClient().GetJsonData("comments");
 
             return JsonConvert.DeserializeObject<List<Comment>>(commentsJson);
         }
 
         public List<Todo> GetTodosList()
         {
-            string todosJson = new WebClient().GetJsonDataAsync("todos").GetAwaiter().GetResult();
+            string todosJson = new WebClient().GetJsonData("todos");
 
             return JsonConvert.DeserializeObject<List<Todo>>(todosJson);
         }
 
         public List<Addres> GetAddressList()
         {
-            string addressJson = new WebClient().GetJsonDataAsync("address").GetAwaiter().GetResult();
+            string addressJson = new WebClient().GetJsonData("address");
 
             return JsonConvert.DeserializeObject<List<Addres>>(addressJson);
         }
