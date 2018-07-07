@@ -90,7 +90,7 @@ namespace AspNetMvcCore.Services
         //query 1
         public IEnumerable<(Post, int)> GetPostCommentsCountByUserId(int userId)
         {
-            return _collection.SingleOrDefault(x => x.Id == userId).Posts
+            return _collection.SingleOrDefault(x => x.Id == userId)?.Posts
                 .Select(p => (p, p.Comments.Count()));
         }
 

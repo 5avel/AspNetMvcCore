@@ -18,20 +18,15 @@ namespace AspNetMvcCore.Controllers
             _queryService = queryService;
         }
 
-        [HttpGet("[controller]/Query1/{id}")]
+        [HttpGet("[controller]/Query1")]
         public IActionResult Query1(int id = 0)
         {
-           
             if (id > 0)
             {
-                var query1 = _queryService.GetPostCommentsCountByUserId(id).ToList();
-                return View(query1);
+                var query1 = _queryService.GetPostCommentsCountByUserId(id);
+                if(query1 != null)
+                    return View(query1.ToList());
             }
-            return View(new List<(Post, int)>());
-        }
-
-        public IActionResult Query1()
-        {
             return View(new List<(Post, int)>());
         }
     }
