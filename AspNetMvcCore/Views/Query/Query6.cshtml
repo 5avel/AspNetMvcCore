@@ -1,0 +1,36 @@
+﻿@model ValueTuple<Post, Comment, Comment, int>
+
+@{
+    ViewData["Title"] = "Query 6";
+}
+<h2>@ViewData["Title"]</h2>
+<div class="row">
+    <div class="col-md-12">
+         <form method="GET" action="/Query/Query6">
+            <div class="input-group mb-3"></div>
+                <input class="form-control" type="text" name="id"/>
+                <input class="btn" type="submit" value="Send" />
+            </div>
+        </form>
+        <table class="table table-striped table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">CreatedAt</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Avatar</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                    <tr>
+                        <td scope="col">@Model.Item1</td>
+                        <td scope="col">@Model.Item2</td>
+                        <td scope="col">@Model.Item3</td>
+                        <td scope="col">@Model.Item4</td>
+                    </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</div>

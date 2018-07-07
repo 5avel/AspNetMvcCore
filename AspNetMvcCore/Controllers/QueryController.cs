@@ -23,11 +23,67 @@ namespace AspNetMvcCore.Controllers
         {
             if (id > 0)
             {
-                var query1 = _queryService.GetPostCommentsCountByUserId(id);
-                if(query1 != null)
-                    return View(query1.ToList());
+                var query = _queryService.GetPostCommentsCountByUserId(id);
+                if(query != null)
+                    return View(query.ToList());
             }
             return View(new List<(Post, int)>());
+        }
+
+        [HttpGet("[controller]/Query2")]
+        public IActionResult Query2(int id = 0)
+        {
+            if (id > 0)
+            {
+                var query = _queryService.GetPostCommentsBodyLessThan50ByUserId(id);
+                if(query != null)
+                    return View(query.ToList());
+            }
+            return View(new List<Comment>());
+        }
+
+        [HttpGet("[controller]/Query3")]
+        public IActionResult Query3(int id = 0)
+        {
+            if (id > 0)
+            {
+                var query = _queryService.GetTodoIdNameByUserId(id);
+                if(query != null)
+                    return View(query.ToList());
+            }
+            return View(new List<(int, string)>());
+        }
+
+        [HttpGet("[controller]/Query4")]
+        public IActionResult Query4()
+        {
+            var query = _queryService.GetUsetsSortByNameAndTodosSortByNameDesc();
+            if(query != null)
+                return View(query.ToList());
+            
+            return View(new List<User>());
+        }
+
+        [HttpGet("[controller]/Query5")]
+        public IActionResult Query5(int id = 0)
+        {
+            if (id > 0)
+            {
+                var query = _queryService.GetUserById(id);
+                return View(query);
+            }
+            return View(new ValueTuple<User, Post, int, int, Post, Post>(null, null, 0, 0, null, null));
+        }
+
+        [HttpGet("[controller]/Query6")]
+        public IActionResult Query6(int id = 0)
+        {
+            if (id > 0)
+            {
+                var query = _queryService.GetPostById(id);
+                return View(query);
+            }
+            return View(new ValueTuple<Post, Comment, Comment, int>(null, null, null, 0));
         }
     }
 }
