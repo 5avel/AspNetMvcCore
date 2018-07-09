@@ -10,6 +10,7 @@ namespace AspNetMvcCore.Models
         public DateTime CreatedAt { set; get; }
         public string Body { set; get; }
         public int UserId { set; get; }
+        public User User { set; get; }
         public int PostId { set; get; }
         public int Likes { set; get; }
     }

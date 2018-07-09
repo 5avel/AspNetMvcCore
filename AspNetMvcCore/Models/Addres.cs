@@ -12,5 +12,6 @@ namespace AspNetMvcCore.Models
         public string Street { set; get; }
         public string Zip { set; get; }
         public int UserId { set; get; }
+        public User User { set; get; }
     }
 }

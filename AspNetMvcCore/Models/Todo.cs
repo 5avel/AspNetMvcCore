@@ -11,5 +11,6 @@ namespace AspNetMvcCore.Models
         public string name { set; get; }
         public bool IsComplete { set; get; }
         public int UserId { set; get; }
+        public User User { set; get; }
     }
 }

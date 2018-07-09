@@ -18,7 +18,7 @@ namespace AspNetMvcCore.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            return View(_queryService.GetUsers());
         }
 
         public IActionResult User(int id)
@@ -28,12 +28,16 @@ namespace AspNetMvcCore.Controllers
 
         public IActionResult Post(int id)
         {
-            return View(_queryService.GetPostById(id));
+            var post = _queryService.GetPostById(id);
+            //post.User = _queryService.GetUserById(post.UserId);
+            return View(post);
         }
 
         public IActionResult Todo(int id)
         {
-            return View(_queryService.GetTodoById(id));
+            var todo = _queryService.GetTodoById(id);
+            //todo.User = _queryService.GetUserById(todo.UserId);
+            return View(todo);
         }
 
 

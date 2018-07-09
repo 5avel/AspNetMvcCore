@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<AspNetMvcCore.Models.User>
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -9,52 +10,98 @@
             <table class="table table-condensed" style="border-collapse:collapse;">
                 <thead>
                     <tr>
-                        <th>&nbsp;</th>
-                        <th>Job Name</th>
-                        <th>Description</th>
-                        <th>Provider Name</th>
-                        <th>Region</th>
-                        <th>Status</th>
+                        <th>#</th>
+                        <th>UserID</th>
+                        <th>Avatar</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>CreatedAt</th>
+                        <th>Posts</th>
+                        <th>Todos</th>
+                        <th>Address</th>
                     </tr>
                 </thead>
-
                 <tbody>
-                    <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
-                        <td><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></td>
-                        <td>OBS Name</td>
-                        <td>OBS Description</td>
-                        <td>hpcloud</td>
-                        <td>nova</td>
-                        <td> created</td>
-
+                    @foreach (User user in Model)
+                    {
+                    <tr >
+                        <td><button data-toggle="collapse" data-target="#user-@user.Id" class="btn btn-default btn-xs accordion-toggle"><span class="glyphicon glyphicon-eye-open"></span></button></td>
+                        <td>@user.Id</td>
+                        <td><img src="@user.Avatar" alt="avatar" width="40" height="40" /></td>
+                        <td>@user.Name</td>
+                        <td>@user.Email</td>
+                        <td>@user.CreatedAt</td>
+                        <td>Posts<span class="badge">@user.Posts.Count()</span></td>
+                        <td>Todos<span class="badge">@user.Todos.Count()</span></td>
+                        <td>Address<span class="badge">@user.Address.Count()</span></td>
                     </tr>
                     <tr>
                         <td colspan="12" class="hiddenRow">
-                            <div class="accordian-body collapse" id="demo1">
+                            <div class="accordian-body collapse" id="user-@user.Id">
+                                <h4>Posts</h4>
                                 <table class="table table-striped">
                                     <thead>
-                                        <tr><td><a href="WorkloadURL">Workload link</a></td><td>Bandwidth: Dandwidth Details</td><td>OBS Endpoint: end point</td></tr>
-                                        <tr><th>Access Key</th><th>Secret Key</th><th>Status </th><th> Created</th><th> Expires</th><th>Actions</th></tr>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Id</th>
+                                            <th>CreatedAt</th>
+                                            <th>Title</th>
+                                            <th>Body</th>
+                                            <th>User</th>
+                                            <th>Likes</th>
+                                            <th>Comments</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>access-key-1</td>
-                                            <td>secretKey-1</td>
-                                            <td>Status</td>
-                                            <td>some date</td>
-                                            <td>some date</td>
-                                            <td>
-                                                <a href="#" class="btn btn-default btn-sm">
-                                                    <i class="glyphicon glyphicon-cog"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        @foreach (Post post in user.Posts)
+                                        {
+                                            <tr>
+                                                <td><button data-toggle="collapse" data-target="#post-@post.Id" class="btn btn-default btn-xs accordion-toggle"><span class="glyphicon glyphicon-eye-open"></span></button></td>
+                                                <td>@post.Id</td>
+                                                <td>@post.CreatedAt</td>
+                                                <td>@post.Title</td>
+                                                <td>@post.Body</td>
+                                                <td><a href="~/Home/User?id=@post.UserId">@post.User.Name</a></td>
+                                                <td>Likes<span class="badge">@post.Likes</span></td>
+                                                <td>Comments<span class="badge">@post.Comments.Count()</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="12" class="hiddenRow">
+                                                    <div class="accordian-body collapse" id="post-@post.Id">
+                                                        <h4>Comments</h4>
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Id</th>
+                                                                    <th>CreatedAt</th>
+                                                                    <th>Body</th>
+                                                                    <th>User</th>
+                                                                    <th>Likes</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (Comment comm in post.Comments)
+                                                                {
+                                                                <tr>
+                                                                    <td>@comm.Id</td>
+                                                                    <td>@comm.CreatedAt</td>
+                                                                    <td>@comm.Body</td>
+                                                                    <td><a href="~/Home/User?id=@comm.UserId">@comm.User.Name</a></td>
+                                                                    <td>Likes<span class="badge">@comm.Likes</span></td>
+                                                                </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
                                     </tbody>
                                 </table>
-
                             </div>
                         </td>
                     </tr>
+                    }
                 </tbody>
             </table>
         </div>

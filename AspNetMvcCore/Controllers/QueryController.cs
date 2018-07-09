@@ -80,7 +80,7 @@ namespace AspNetMvcCore.Controllers
         {
             if (id > 0)
             {
-                var query = _queryService.GetPostById(id);
+                var query = _queryService.Query6(id);
                 return View(query);
             }
             return View(new ValueTuple<Post, Comment, Comment, int>(null, null, null, 0));

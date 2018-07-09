@@ -1,12 +1,16 @@
 @model AspNetMvcCore.Models.Post
 
+<h4>Post</h4>
+<div class="row">
     <div class="col-sm-4">
-        <h4>@Model.Title</h4>
-        <p>@Model.Body</p>
+        <h4>@Model?.Title</h4>
+        <p>@Model?.Body</p>
     </div>
     <div class="col-sm-4">
-        <p>Id:@Model.Id,</p>
-        <p>CreatedAt:@Model.CreatedAt, </p>
-        Likse<span class="badge">@Model.Likes</span>, 
-        Comments<span class="badge">@Model.Comments.Count()</span> </p>
+        <p>Id:@Model?.Id</p>
+        <p>User:<a href="~/Home/User?id=@Model?.UserId">@Model?.User?.Name</a></p>
+        <p>CreatedAt:@Model?.CreatedAt </p>
+        Likse<span class="badge">@Model?.Likes</span>,
+        Comments<span class="badge">@Model?.Comments?.Count()</span> </p>
     </div>
+</div>

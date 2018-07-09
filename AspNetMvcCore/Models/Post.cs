@@ -11,6 +11,7 @@ namespace AspNetMvcCore.Models
         public string Title { set; get; }
         public string Body { set; get; }
         public int UserId { set; get; }
+        public User User { set; get; }
         public int Likes { set; get; }
         public IEnumerable<Comment> Comments { get; set; }
 

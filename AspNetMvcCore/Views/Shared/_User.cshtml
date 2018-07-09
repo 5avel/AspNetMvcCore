@@ -1,13 +1,17 @@
 @model AspNetMvcCore.Models.User
 
-    <div class="col-sm-2">
-        <img alt="" src="@Model.Avatar"/>
-    </div>
-    <div class="col-sm-6">
-        <p class="text-info"> @Model.Name</p>
-        <p>Id:@Model.Id,</p>
-        <p>CreatedAt:@Model.CreatedAt, </p>
-        <p>Posts<span class="badge">@Model.Posts.Count()</span>, 
-        Todos<span class="badge">@Model.Todos.Count()</span>, 
-        Address<span class="badge">@Model.Address.Count()</span> </p>
-    </div>
+    
+    @if (Model != null)
+    {
+        <div class="col-sm-2">
+            <img alt="" src="@Model.Avatar"/>
+        </div>
+        <div class="col-sm-6">
+            <p class="text-info"> @Model.Name</p>
+            <p>Id:@Model.Id,</p>
+            <p>CreatedAt:@Model.CreatedAt, </p>
+            <p>Posts<span class="badge">@Model.Posts.Count()</span>, 
+            Todos<span class="badge">@Model.Todos.Count()</span>, 
+            Address<span class="badge">@Model.Address.Count()</span> </p>
+        </div>
+    }

@@ -28,15 +28,16 @@
             <tbody>
                 @foreach (var i in Model)
                 {
-                    <tr>
-                        <td scope="col">@i.Item1.Id</td>
-                        <td scope="col">@i.Item1.CreatedAt</td>
-                        <td scope="col">@i.Item1.Title</td>
-                        <td scope="col">@i.Item1.Body</td>
-                        <td scope="col">@i.Item1.UserId</td>
-                        <td scope="col">@i.Item1.Likes</td>
-                        <td scope="col">@i.Item2</td>
-                    </tr>
+                <tr>
+                    <td scope="col">@i.Item1.Id</td>
+                    <td scope="col">@i.Item1.CreatedAt</td>
+                    <td scope="col">@i.Item1.Title</td>
+                    <td scope="col">@i.Item1.Body</td>
+                    <td scope="col">@i.Item1.UserId</td>
+                    <p>User:<a href="~/Home/User?id=@i.Item1.UserId">@i.Item1.User.Name</a></p>
+                    <td scope="col">@i.Item1.Likes</td>
+                    <td scope="col">@i.Item2</td>
+                </tr>
                 }
                
             </tbody>

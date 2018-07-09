@@ -19,6 +19,8 @@ namespace AspNetMvcCore.Services
         Post GetPostById(int postId);
         Todo GetTodoById(int todoId);
 
+        List<User> GetUsers();
+
     }
 
     public class QueryService : IQueryService
@@ -41,6 +43,12 @@ namespace AspNetMvcCore.Services
             var todos = _dataSecice.GetTodosList();
             var address = _dataSecice.GetAddressList();
 
+            posts.ForEach(p => p.User = users.FirstOrDefault(u => u.Id == p.UserId));
+            todos.ForEach(t => t.User = users.FirstOrDefault(u => u.Id == t.UserId));
+            address.ForEach(a => a.User = users.FirstOrDefault(u => u.Id == a.UserId));
+            comments.ForEach(c => c.User = users.FirstOrDefault(u => u.Id == c.UserId));
+
+
             var postsComments = posts.GroupJoin(comments, p => p.Id, c => c.PostId,
                (p, c) => new Post()
                {
@@ -49,6 +57,7 @@ namespace AspNetMvcCore.Services
                    Title = p.Title,
                    Body = p.Body,
                    UserId = p.UserId,
+                   User = p.User,
                    Likes = p.Likes,
                    Comments = c
                });
@@ -93,19 +102,27 @@ namespace AspNetMvcCore.Services
         //query 1
         public IEnumerable<(Post, int)> GetPostCommentsCountByUserId(int userId)
         {
-            return _collection.SingleOrDefault(x => x.Id == userId)?.Posts
-                .Select(p => (p, p.Comments.Count()));
+            if (_collection.Count() == 0) return null;
+           
+                IEnumerable<Post> posts = _collection.FirstOrDefault(x => x.Id == userId)?.Posts;
+                if (posts != null && posts.Count() > 0)
+                {
+                    return posts.Select(p => (p, p.Comments.Count()));
+                }
+          
+            return null;
         }
 
         //query 2
         public IEnumerable<Comment> GetPostCommentsBodyLessThan50ByUserId(int userId)
         {
-            return from u in _collection
+            var res = from u in _collection
                    where u.Id == userId
                    from p in u.Posts
                    from c in p.Comments
                    where c.Body.Length < 50
                    select c;
+            return res;
         }
 
         //query 3
@@ -136,12 +153,12 @@ namespace AspNetMvcCore.Services
                       .Select(x =>
                       (
                           x,
-                          x.Posts.OrderBy(p => p.CreatedAt).Last(),
-                          x.Posts.OrderBy(p => p.CreatedAt).Last().Comments.Count(),
+                          x.Posts.OrderBy(p => p.CreatedAt).LastOrDefault(),
+                          x.Posts.OrderBy(p => p.CreatedAt).LastOrDefault().Comments.Count(),
                           x.Todos.Count(t => t.IsComplete == false),
                           x.Posts.OrderBy(p => p.Comments.Count(c => c.Body.Length > 80)).Last(),
-                          x.Posts.OrderBy(p => p.Likes).Last()
-                      )).First();
+                          x.Posts.OrderBy(p => p.Likes).LastOrDefault()
+                      )).FirstOrDefault();
         }
 
         //query 6
@@ -173,6 +190,12 @@ namespace AspNetMvcCore.Services
         public Todo GetTodoById(int todoId)
         {
             var res2 = _collection.SelectMany(u => u.Todos.Where(t => t.Id == todoId)).Select(x => x).FirstOrDefault();
+            return res2;
+        }
+
+        public List<User> GetUsers()
+        {
+            var res2 = _collection.ToList();
             return res2;
         }
     }
