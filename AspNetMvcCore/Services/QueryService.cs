@@ -13,8 +13,11 @@ namespace AspNetMvcCore.Services
         IEnumerable<Comment> GetPostCommentsBodyLessThan50ByUserId(int userId);
         IEnumerable<(int, string)> GetTodoIdNameByUserId(int userId);
         IEnumerable<User> GetUsetsSortByNameAndTodosSortByNameDesc();
-        (User, Post, int, int, Post, Post) GetUserById(int userId);
-        (Post, Comment, Comment, int) GetPostById(int postId);
+        (User, Post, int, int, Post, Post) Query5(int userId);
+        (Post, Comment, Comment, int) Query6(int postId);
+        User GetUserById(int userId);
+        Post GetPostById(int postId);
+        Todo GetTodoById(int todoId);
 
     }
 
@@ -127,7 +130,7 @@ namespace AspNetMvcCore.Services
         }
 
         //query 5
-        public (User, Post, int, int, Post, Post) GetUserById(int userId)
+        public (User, Post, int, int, Post, Post) Query5(int userId)
         {
             return _collection.Where(u => u.Id == userId)
                       .Select(x =>
@@ -142,7 +145,7 @@ namespace AspNetMvcCore.Services
         }
 
         //query 6
-        public (Post, Comment, Comment, int) GetPostById(int postId)
+        public (Post, Comment, Comment, int) Query6(int postId)
         {
             var res2 = _collection.SelectMany(u => u.Posts.Where(p => p.Id == postId)
             .Select(x =>
@@ -152,6 +155,24 @@ namespace AspNetMvcCore.Services
                 x.Comments.OrderBy(c => c.Likes).FirstOrDefault(),
                 x.Comments.Count(c => c.Likes == 0 || c.Body.Length < 80)
             ))).FirstOrDefault();
+            return res2;
+        }
+
+        public User GetUserById(int userId)
+        {
+            var res2 = _collection.FirstOrDefault(x => x.Id == userId);
+            return res2;
+        }
+
+        public Post GetPostById(int postId)
+        {
+            var res2 = _collection.SelectMany(u => u.Posts.Where(p => p.Id == postId)).Select(x => x).FirstOrDefault();
+            return res2;
+        }
+
+        public Todo GetTodoById(int todoId)
+        {
+            var res2 = _collection.SelectMany(u => u.Todos.Where(t => t.Id == todoId)).Select(x => x).FirstOrDefault();
             return res2;
         }
     }

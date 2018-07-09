@@ -5,39 +5,38 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AspNetMvcCore.Models;
-
+using AspNetMvcCore.Services;
 
 namespace AspNetMvcCore.Controllers
 {
     public class HomeController : Controller
     {
-        public HomeController()
+        private IQueryService _queryService;
+        public HomeController(IQueryService queryService)
         {
-          
+            _queryService = queryService;
         }
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult User(int id)
         {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
+            return View(_queryService.GetUserById(id));
         }
 
-        public IActionResult Contact()
+        public IActionResult Post(int id)
         {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
+            return View(_queryService.GetPostById(id));
         }
 
-        public IActionResult Privacy()
+        public IActionResult Todo(int id)
         {
-            return View();
+            return View(_queryService.GetTodoById(id));
         }
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

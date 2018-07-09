@@ -1,0 +1,12 @@
+@model AspNetMvcCore.Models.Post
+
+    <div class="col-sm-4">
+        <h4>@Model.Title</h4>
+        <p>@Model.Body</p>
+    </div>
+    <div class="col-sm-4">
+        <p>Id:@Model.Id,</p>
+        <p>CreatedAt:@Model.CreatedAt, </p>
+        Likse<span class="badge">@Model.Likes</span>, 
+        Comments<span class="badge">@Model.Comments.Count()</span> </p>
+    </div>
