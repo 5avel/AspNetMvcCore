@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataService.Model
+namespace AspNetMvcCore.Models
 {
     public class Addres
     {
@@ -12,5 +12,6 @@ namespace DataService.Model
         public string Street { set; get; }
         public string Zip { set; get; }
         public int UserId { set; get; }
+        public User User { set; get; }
     }
 }

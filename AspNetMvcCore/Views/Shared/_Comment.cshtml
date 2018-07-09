@@ -1,0 +1,7 @@
+@model Comment
+
+<div class="well well-sm">
+    <p class="text-info"> @Model?.Body</p>
+    <p>User:<a href="~/Home/User?id=@Model?.UserId">@Model?.User?.Name</a></p>
+    <p>@Model?.CreatedAt Likes<span class="badge">@Model?.Likes</span> Id:@Model?.Id, UserId: @Model?.UserId, PostId: @Model?.PostId</p>
+</div>

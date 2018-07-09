@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataService.Model
+namespace AspNetMvcCore.Models
 {
     public class Todo
     {
@@ -11,5 +11,6 @@ namespace DataService.Model
         public string name { set; get; }
         public bool IsComplete { set; get; }
         public int UserId { set; get; }
+        public User User { set; get; }
     }
 }

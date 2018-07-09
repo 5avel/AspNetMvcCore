@@ -7,12 +7,17 @@
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css" rel="stylesheet"/>
+        
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        
+        <link href="http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css" rel="stylesheet"/>
+        
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
@@ -31,8 +36,12 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-area="" asp-controller="Query" asp-action="Query1">Query1</a></li>
+                    <li><a asp-area="" asp-controller="Query" asp-action="Query2">Query2</a></li>
+                    <li><a asp-area="" asp-controller="Query" asp-action="Query3">Query3</a></li>
+                    <li><a asp-area="" asp-controller="Query" asp-action="Query4">Query4</a></li>
+                    <li><a asp-area="" asp-controller="Query" asp-action="Query5">Query5</a></li>
+                    <li><a asp-area="" asp-controller="Query" asp-action="Query6">Query6</a></li>
                 </ul>
             </div>
         </div>

@@ -1,0 +1,5 @@
+@model IEnumerable<Comment>
+@foreach (var i in Model)
+{
+    @Html.Partial("_Comment", i)
+}

@@ -1,0 +1,22 @@
+﻿@model ValueTuple<Post, Comment, Comment, int>
+
+@{
+    ViewData["Title"] = "Query 6";
+}
+<h2>@ViewData["Title"]</h2>
+<div class="row">
+    <div class="col-md-12">
+        <form method="GET" action="/Query/Query6" class="form-inline">
+            <div class="form-group">
+                <input class="form-control" type="text" name="id" placeholder="Enter PostId" />
+                <input class="btn" type="submit" value="Send" />
+            </div>
+        </form>
+        <div class="container">
+            @Html.Partial("_Post", @Model.Item1)
+            @Html.Partial("_Comment", @Model.Item2)
+            @Html.Partial("_Comment", @Model.Item3)
+            <p>@Model.Item3</p>
+        </div>
+    </div>
+</div>

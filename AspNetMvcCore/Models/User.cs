@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataService.Model
+namespace AspNetMvcCore.Models
 {
     public class User
     {
